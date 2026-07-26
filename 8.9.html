@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JeffeyP's Gym OS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+
+<section id="home" class="screen active homeOS">
+
+  <img id="tournamentRefWindow" class="tournamentRefWindow" src="assets/ref_countdown_window_blank_v83.png" alt="">
+  <img id="streakRefWindow" class="streakRefWindow" src="assets/ref_streak_window_blank_v84.png" alt="">
+  <img id="lastRefWindow" class="lastRefWindow" src="assets/ref_last_window_blank_v84.png" alt="">
+
+  <!-- live values over the cleaned OS screenshot -->
+  <div id="homeWorkoutTitle" class="homeField workoutTitleField">STRENGTH B</div>
+  <div id="homeWorkoutFocus" class="homeField workoutFocusField">ATHLETIC DAY</div>
+  <div id="homeFocusLine" class="homeField focusLineField">LOWER BODY • CORE • STABILITY</div>
+  <div id="homeKneeHoldAlert" class="homeKneeHoldAlert">KNEE HOLD ACTIVE — LOWER BODY PAUSED</div>
+  <div id="homeShirtPatch" class="homeShirtPatch" aria-hidden="true"></div>
+  <div id="homeShirtNeon" class="homeShirtNeon" aria-hidden="true"><div class="neonLine"></div><div>BE</div><div>STRONGER</div><div>THAN YOUR</div><div>EXCUSES</div><div class="neonLine bottom"></div></div>
+  
+
+  <img id="countdownBlendPatch" class="countdownBlendPatch" src="assets/countdown_blend_patch.png" alt="">
+  <div id="homeCountdown" class="homeField countdownField">26</div>
+  <div id="homeStreak" class="homeField streakField">12</div>
+  <div class="homeField streakDaysField">DAYS</div>
+
+  <div id="homeLastWorkout" class="homeField lastWorkoutField">STRENGTH A</div>
+  <div id="homeLastDetail" class="homeField lastDetailField">PUSH / LEGS</div>
+  <div id="homeLastDate" class="homeField lastDateField">MAY 26, 2025</div>
+
+  <div id="homeDate" class="homeField dateField">MAY 29, 2025</div>
+  <div id="homeTime" class="homeField timeField">7:42 PM</div>
+  <div id="homeBodyWeight" class="homeField weightField">185.2 LBS</div>
+  <div id="homeRecovery" class="homeField recoveryField">8.1 / 10</div>
+  <div id="homeSleep" class="homeField sleepField">7.2 HRS</div>
+  <div id="homeHrv" class="homeField hrvField">68 MS</div>
+  <div id="homeHydration" class="homeField hydrationField">GOOD</div>
+  <div class="statusThreeBackdrop" aria-hidden="true"></div>
+
+  <!-- true clickable hit zones -->
+  <button class="hit hitStart" onclick="startSelectedWorkout()" title="Start Workout"></button>
+  <button class="hit hitStrength" onclick="startSelectedWorkout()" title="Strength"></button>
+  <button class="hit hitConditioning" onclick="showList('conditioning')" title="Conditioning"></button>
+  <button class="hit hitRecovery" onclick="showList('recovery')" title="Recovery"></button>
+  <button class="hit hitTournament" onclick="showList('tournamentMode')" title="Tournament Mode"></button>
+  <button class="hit hitProgress" onclick="showProgress()" title="Progress"></button>
+  <button class="hit hitSettings" onclick="openSettings()" title="Settings"></button>
+  <button class="hit hitWarmTile" onclick="startSelectedWorkout()" title="Warm-Up"></button>
+  <button class="hit hitCondTile" onclick="showList('conditioning')" title="Conditioning"></button>
+  <button class="hit hitRecTile" onclick="showList('recovery')" title="Recovery"></button>
+  <button class="hit hitTournTile" onclick="showList('tournamentMode')" title="Tournament Mode"></button>
+</section>
+
+<section id="workout" class="screen flow">
+  <header class="flowHeader">
+    <div class="flowBrand">
+      <img src="assets/pranzo.png">
+      <div><span id="phaseLabel">WARM-UP</span><h1 id="phaseTitle">WEDNESDAY · STRENGTH B</h1></div>
+    </div>
+    <div class="flowActions">
+      <b id="roundPill">WARM-UP</b><b id="itemPill">ITEM 1 / 7</b>
+      <button onclick="goHome()">HOME</button><button onclick="openSettings()">SETTINGS</button>
+    </div>
+  </header>
+  <div class="workGrid">
+    <div class="videoBox panel">
+      <video id="exerciseVideo" autoplay muted loop playsinline></video>
+      <div id="videoPlaceholder"><div>▶</div><span id="videoFileName">VIDEO PLACEHOLDER</span></div>
+    </div>
+    <div class="exerciseCard panel">
+      <span id="currentLabel">CURRENT MOVEMENT</span>
+      <h2 id="itemName">BODYWEIGHT SQUATS</h2>
+      <div class="metrics exerciseMetrics">
+        <div><label>TARGET</label><b id="itemTarget">15 REPS</b></div>
+        <div><label>PREVIOUS</label><b id="lastUsedWeight">--</b></div>
+        <div>
+          <label>TODAY</label>
+          <div class="weightAdjust">
+            <button type="button" onclick="adjustTodayWeight(-5)">-5</button>
+            <input id="todayWeightInput" class="weightInput" placeholder="LBS" inputmode="decimal" onchange="saveCurrentExerciseWeight()" onblur="saveCurrentExerciseWeight()">
+            <button type="button" onclick="adjustTodayWeight(5)">+5</button>
+          </div>
+        </div>
+      </div>
+      <p id="itemCue">MOVE SMOOTH AND CONTROLLED.</p>
+      <div class="nextBox"><label>NEXT</label><b id="nextName">ARM CIRCLES</b></div>
+      <div class="buttonRow"><button onclick="prevItem()">◀ BACK</button><button class="goldBtn" id="mainAction" onclick="mainAction()">DONE</button><button onclick="nextItem()">NEXT ▶</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="rest" class="screen center"><div class="modal panel">
+  <img src="assets/pranzo.png" class="modalLogo"><button class="topHome" onclick="goHome()">HOME</button>
+  <span>RECOVERY WINDOW</span><h1>REST</h1><strong id="restTimer">45</strong>
+  <p>NEXT UP <b id="restNextName">NEXT</b><em id="restNextCue">CUE</em></p>
+  <div class="buttonRow"><button onclick="adjustRest(-15)">-15</button><button class="goldBtn" onclick="skipRest()">SKIP REST</button><button onclick="adjustRest(15)">+15</button></div>
+</div></section>
+
+<section id="list" class="screen center"><div class="listPanel panel">
+  <img src="assets/pranzo.png" class="modalLogo"><button class="topHome" onclick="goHome()">HOME</button>
+  <span id="listLabel">JEFFEYP'S GYM OS</span><h1 id="listTitle">CONDITIONING</h1><div id="listItems"></div><button class="goldBtn full" onclick="goHome()">HOME</button>
+</div></section>
+
+<section id="progress" class="screen center"><div class="listPanel panel">
+  <img src="assets/pranzo.png" class="modalLogo"><button class="topHome" onclick="goHome()">HOME</button>
+  <span>JEFFEYP'S GYM OS</span><h1>PROGRESS</h1>
+  <div class="progressGrid">
+    <div><label>WORKOUT STREAK</label><b id="pgStreak">12 DAYS</b></div><div><label>LAST WORKOUT</label><b id="pgLastWorkout">STRENGTH A</b></div>
+    <div><label>BODY WEIGHT</label><b id="pgWeight">185.2 LBS</b></div><div><label>RECOVERY</label><b id="pgRecovery">8.1 / 10</b></div>
+    <div><label>SLEEP</label><b id="pgSleep">7.2 HRS</b></div><div><label>HRV</label><b id="pgHrv">68 MS</b></div>
+    <div><label>KNEE HOLD</label><b id="pgKneeHold">OFF</b></div>
+  </div>
+  <div class="settingsButtons"><button class="goldBtn" onclick="openSettings()">EDIT SETTINGS</button><button class="goldBtn" onclick="openWeights()">EXERCISE WEIGHTS</button><button class="goldBtn" onclick="goHome()">HOME</button></div>
+</div></section>
+
+<section id="settings" class="screen center"><div class="settingsPanel panel">
+  <img src="assets/pranzo.png" class="modalLogo"><span>JEFFEYP'S GYM OS</span><h1>SETTINGS</h1>
+  <p>Leave Date or Time blank to use the PC clock. Last Workout determines the next workout on the home screen.</p>
+  <div class="settingsGrid">
+    <label>Date <input id="setDate" placeholder="Auto"></label><label>Time <input id="setTime" placeholder="Auto"></label>
+    <label>Body Weight <input id="setBodyWeight" placeholder="185.2 LBS"></label><label>Recovery Score <input id="setRecoveryScore" placeholder="8.1 / 10"></label>
+    <label>Sleep <input id="setSleep" placeholder="7.2 HRS"></label><label>HRV <input id="setHrv" placeholder="68 MS"></label>
+    <label>Hydration <input id="setHydration" placeholder="GOOD"></label><label>Workout Streak <input id="setStreak" placeholder="12"></label>
+    <label>Last Workout <select id="setLastWorkout" onchange="syncLastWorkoutDetail()"><option value="STRENGTH A">STRENGTH A</option><option value="STRENGTH B">STRENGTH B</option><option value="STRENGTH C">STRENGTH C</option></select></label>
+    <label>Last Workout Detail <input id="setLastDetail" readonly></label><label>Last Workout Date <input id="setLastDate" placeholder="JUL 2, 2026"></label>
+    <label class="kneeHoldToggle">Knee Hold Mode <span><input id="setKneeHold" type="checkbox" onchange="syncLastWorkoutDetail()"><b>LOWER BODY PAUSED</b></span></label>
+  </div>
+  <div class="settingsButtons"><button class="goldBtn" onclick="saveSettings()">SAVE SETTINGS</button><button class="goldBtn" onclick="resetSettings()">RESET</button><button class="goldBtn" onclick="openWeights()">EXERCISE WEIGHTS</button><button class="goldBtn" onclick="goHome()">HOME</button></div>
+</div></section>
+
+<section id="tee" class="screen center"><div class="teePanel panel">
+  <img src="assets/pranzo.png" class="modalLogo"><button class="topHome" onclick="goHome()">HOME</button>
+  <span>JEFFEYP'S GYM OS</span><h1>BACK OF TEE</h1>
+  <div class="teeStaticPreview"><div class="teeNeonLarge"><div class="neonLine"></div><div>BE</div><div>STRONGER</div><div>THAN YOUR</div><div>EXCUSES</div><div class="neonLine bottom"></div></div></div>
+  <p class="teeStaticNote">Back of tee shirt graphic</p>
+  <div class="settingsButtons teeButtons"><button class="goldBtn" onclick="goHome()">HOME</button></div>
+</div></section>
+
+
+<section id="weights" class="screen center"><div class="weightsPanel panel">
+  <img src="assets/pranzo.png" class="modalLogo"><button class="topHome" onclick="goHome()">HOME</button>
+  <span>JEFFEYP'S GYM OS</span><h1>EXERCISE WEIGHTS</h1>
+  <p class="weightsHelp">Edit the saved previous weight for each exercise. These values feed the PREVIOUS and TODAY fields during workouts.</p>
+  <div id="weightsList" class="weightsList"></div>
+  <div class="settingsButtons weightButtons">
+    <button class="goldBtn" onclick="saveWeightsScreen()">SAVE WEIGHTS</button>
+    <button class="goldBtn" onclick="clearWeightsScreen()">CLEAR ALL</button>
+    <button class="goldBtn" onclick="goHome()">HOME</button>
+  </div>
+</div></section>
+
+<section id="complete" class="screen center"><div class="modal panel">
+  <img src="assets/pranzo.png" class="modalLogo"><button class="topHome" onclick="goHome()">HOME</button>
+  <span>SESSION COMPLETE</span><h1 id="completeTitle">WORKOUT COMPLETE</h1><p id="completeText"></p><button class="goldBtn full" onclick="goHome()">HOME</button>
+</div></section>
+
+</div>
+<script src="workout_data.js"></script><script src="script.js"></script>
+</body></html>
