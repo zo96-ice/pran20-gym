@@ -1,0 +1,1563 @@
+
+:root{
+  --gold:#ffd22e; --red:#ff3131; --green:#4cdf3d; --blue:#18a7ff; --purple:#9d44ff;
+  --line:rgba(255,255,255,.22);
+  --impact:Impact,"Arial Narrow","Bahnschrift Condensed",Arial,sans-serif;
+  --cond:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#000;color:#eee;font-family:var(--cond);text-transform:uppercase;overflow:hidden}
+#stage{width:1536px;height:1024px;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(var(--scale,1));transform-origin:center;background:#000}
+.screen{display:none;position:absolute;inset:0;background:linear-gradient(135deg,#050505,#0a0b0d 55%,#000);padding:0}
+.screen:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);background-size:34px 34px;pointer-events:none;z-index:0}
+.screen.active{display:block}
+.screen>*{position:absolute;z-index:1}
+button{font-family:var(--cond);text-transform:uppercase;cursor:pointer}
+
+.homeOS{
+  background:url('assets/home_os_clean.png') center center/100% 100% no-repeat!important;
+}
+.homeOS:after{display:none!important}
+
+.homeField{
+  position:absolute!important;
+  z-index:50!important;
+  pointer-events:none!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  background:transparent!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+
+/* OS-match dynamic home field styling */
+.workoutTitleField{
+  left:318px!important; top:342px!important; width:390px!important;
+  font-family:Impact,"Arial Narrow","Bahnschrift Condensed",Arial,sans-serif!important;
+  font-size:58px!important;
+  line-height:.96!important;
+  font-weight:900!important;
+  color:#ffd22e!important;
+  letter-spacing:1px!important;
+  text-shadow:4px 4px 0 #000,0 0 18px rgba(255,210,46,.55)!important;
+}
+.workoutFocusField{
+  left:319px!important; top:418px!important; width:385px!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:36px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  color:#d9dde0!important;
+  letter-spacing:4px!important;
+  text-shadow:2px 2px 0 #000!important;
+}
+.focusLineField{
+  left:379px!important; top:580px!important; width:318px!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  color:#ffd22e!important;
+  letter-spacing:.2px!important;
+  text-shadow:1px 1px 0 #000!important;
+}
+
+/* Countdown from the OS photo: solid white/grey block with purple glow */
+.countdownField{
+  left:1330px!important; top:116px!important; width:150px!important;
+  text-align:center!important;
+  font-family:Impact,"Arial Narrow","Bahnschrift Condensed",Arial,sans-serif!important;
+  font-size:92px!important;
+  line-height:.92!important;
+  font-weight:900!important;
+  letter-spacing:0!important;
+  color:#f2f2f2!important;
+  -webkit-text-fill-color:#f2f2f2!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+  text-shadow:0 0 15px rgba(157,95,255,.95),0 4px 0 #111,2px 2px 0 #333!important;
+}
+
+/* Streak and last-workout windows from OS photo */
+.streakField{
+  left:1245px!important; top:388px!important; width:132px!important;
+  font-family:Impact,"Arial Narrow","Bahnschrift Condensed",Arial,sans-serif!important;
+  font-size:92px!important;
+  line-height:.9!important;
+  font-weight:900!important;
+  color:#ff3131!important;
+  text-align:center!important;
+  text-shadow:0 0 18px #ff0000,0 3px 0 #111!important;
+}
+.streakDaysField{
+  left:1264px!important; top:502px!important; width:96px!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:25px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  color:#d9d9d9!important;
+  text-align:center!important;
+  text-shadow:1px 1px 0 #000!important;
+}
+.lastWorkoutField{
+  left:1120px!important; top:624px!important; width:290px!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:40px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  color:#4cdf3d!important;
+  text-shadow:0 0 12px rgba(76,223,61,.55),2px 2px 0 #000!important;
+}
+.lastDetailField{
+  left:1120px!important; top:673px!important; width:270px!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:26px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  color:#f2f2f2!important;
+  text-shadow:1px 1px 0 #000!important;
+}
+.lastDateField{
+  left:1152px!important; top:721px!important; width:215px!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  color:#d9d9d9!important;
+  text-shadow:1px 1px 0 #000!important;
+}
+
+/* Bottom status row: positions from OS photo */
+.dateField,.timeField,.weightField,.recoveryField,.sleepField,.hrvField,.hydrationField{
+  top:967px!important;
+  height:26px!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:.1px!important;
+  text-shadow:1px 1px 0 #000!important;
+  background:transparent!important;
+}
+.dateField{left:88px!important;width:150px!important;color:#ffd22e!important;}
+.timeField{left:364px!important;width:110px!important;color:#ffd22e!important;}
+.weightField{left:550px!important;width:148px!important;color:#ffd22e!important;}
+.recoveryField{left:792px!important;width:122px!important;color:#4cdf3d!important;}
+.sleepField{left:1092px!important;width:118px!important;color:#18a7ff!important;}
+.hrvField{left:1230px!important;width:112px!important;color:#9d44ff!important;}
+.hydrationField{left:1402px!important;width:112px!important;color:#18a7ff!important;}
+
+/* Click zones */
+.hit{
+  position:absolute!important;
+  z-index:10000!important;
+  border:0!important;
+  background:rgba(255,210,46,0)!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  border-radius:10px!important;
+}
+.hit:hover{outline:3px solid rgba(255,210,46,.9)!important;background:rgba(255,210,46,.08)!important;}
+.hitStart{left:309px;top:679px;width:752px;height:79px}
+.hitStrength{left:12px;top:358px;width:263px;height:72px}
+.hitConditioning{left:12px;top:432px;width:263px;height:72px}
+.hitRecovery{left:12px;top:506px;width:263px;height:72px}
+.hitTournament{left:12px;top:580px;width:263px;height:82px}
+.hitProgress{left:12px;top:663px;width:263px;height:64px}
+.hitSettings{left:12px;top:727px;width:263px;height:50px}
+.hitWarmTile{left:12px;top:788px;width:340px;height:122px}
+.hitCondTile{left:366px;top:788px;width:374px;height:122px}
+.hitRecTile{left:751px;top:788px;width:357px;height:122px}
+.hitTournTile{left:1120px;top:788px;width:404px;height:122px}
+
+/* Non-home windows use the slim v2-style font */
+.panel{border:2px solid var(--line);border-radius:12px;background:linear-gradient(145deg,rgba(17,19,22,.985),rgba(2,3,5,.985));box-shadow:0 0 0 1px rgba(255,255,255,.04),0 0 30px rgba(0,0,0,.75);overflow:hidden}
+.flow{padding:16px 26px}.flow>*{position:relative}
+.flowHeader{height:96px;display:flex;justify-content:space-between;align-items:center}
+.flowBrand{display:flex;align-items:center;gap:18px}.flowBrand img{width:74px;height:74px;object-fit:contain}
+.flowBrand span{color:var(--gold);font-size:24px;font-weight:700}
+.flowBrand h1{font-size:44px;color:var(--gold);margin:0;line-height:1;text-shadow:3px 3px #000}
+.flowActions{display:flex;gap:8px;align-items:center}
+.flowActions b,.flowActions button,.topHome{height:44px;border:2px solid var(--gold);border-radius:7px;background:rgba(255,210,46,.11);color:var(--gold);font-size:20px;padding:8px 13px;font-weight:700}
+.workGrid{height:890px;display:grid;grid-template-columns:1.08fr .92fr;gap:16px}
+.videoBox{position:relative;background:#111}
+.videoBox video{width:100%;height:100%;object-fit:cover;display:none}
+#videoPlaceholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--gold);font-size:82px}
+#videoPlaceholder span{display:block;color:#ddd;font-size:22px;margin-top:240px}
+.exerciseCard{position:relative;padding:26px 28px;display:flex;flex-direction:column}
+.exerciseCard>span{color:var(--gold);font-size:24px;font-weight:700}
+.exerciseCard h2{font-family:var(--cond);font-size:62px;line-height:.95;color:var(--gold);margin:18px 0;text-shadow:3px 3px #000,0 0 12px rgba(255,210,46,.4);font-weight:700}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metrics div{border:1px solid rgba(255,255,255,.18);border-radius:8px;background:#060708;padding:16px}
+.metrics label,.nextBox label{display:block;color:#e2e2e2;font-size:21px;font-weight:700}
+.metrics b{font-size:28px;color:#fff}
+.exerciseCard p{font-size:29px;line-height:1.22;font-weight:700;min-height:150px}
+.nextBox{border:1px solid rgba(255,210,46,.45);border-radius:8px;padding:16px;margin-top:auto}
+.nextBox b{display:block;color:var(--gold);font-size:32px}
+.buttonRow{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px;margin-top:12px}
+.buttonRow button{height:60px;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:#0b0c0e;color:#fff;font-size:25px;font-weight:700}
+.goldBtn{border:0!important;background:linear-gradient(#ffe45b,#ffc525)!important;color:#050505!important}
+.goldBtn:hover{filter:brightness(1.12)}
+.center{display:none;place-items:center}.center.active{display:grid}.center>*{position:relative}
+.modal,.listPanel,.settingsPanel,.teePanel{width:1030px;max-height:900px;padding:42px;text-align:center;position:relative;border-color:rgba(255,255,255,.22);background:radial-gradient(circle at 70% 10%,rgba(110,40,180,.12),transparent 30%),linear-gradient(145deg,rgba(17,19,22,.985),rgba(2,3,5,.985))}
+.modalLogo{position:absolute;left:20px;top:20px;width:82px;height:82px;object-fit:contain}
+.topHome{position:absolute;right:20px;top:20px;width:118px}
+.modal>span,.listPanel>span,.settingsPanel>span,.teePanel>span{color:var(--gold);font-size:22px;font-weight:700;letter-spacing:.4px}
+.modal h1,.listPanel h1,.settingsPanel h1,.teePanel h1{font-family:var(--cond);font-size:76px;color:var(--gold);font-weight:700;margin:14px 0;text-shadow:2px 2px 0 #000,0 0 12px rgba(255,210,46,.45);letter-spacing:.5px}
+.modal strong{font-size:160px;color:var(--red);text-shadow:0 0 22px #f00;line-height:1;font-weight:700}
+.modal p{font-size:28px}.modal p b{display:block;color:var(--gold);font-size:38px}.modal p em{display:block;color:#ddd;font-style:normal}
+.listrow{display:grid;grid-template-columns:1fr 310px;gap:12px;text-align:left;align-items:center;background:#050608;border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:14px 16px;margin:10px 0;min-height:56px}
+.listrow b{font-size:27px;color:#f2f2f2;font-weight:600;text-shadow:1px 1px 0 #000}
+.listrow span{font-size:22px;color:var(--gold);font-weight:600;text-align:right;text-shadow:1px 1px 0 #000}
+.full{width:100%;height:66px;font-size:38px;border-radius:8px;margin-top:15px}
+.progressGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.progressGrid div{background:#050608;border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:17px;text-align:left}
+.progressGrid label{display:block;font-size:20px;color:#ddd;font-weight:600}.progressGrid b{display:block;font-size:31px;color:var(--gold);margin-top:5px}
+.settingsPanel{width:1040px}.settingsPanel p{font-size:18px;color:#ddd;text-transform:none;margin:0 0 18px}
+.settingsGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+.settingsGrid label{font-size:20px;color:var(--gold);font-weight:600}
+.settingsGrid input,.settingsGrid select{width:100%;height:43px;margin-top:5px;border:1px solid rgba(255,255,255,.28);border-radius:6px;background:#050608;color:#fff;font:inherit;font-size:20px;padding:6px 10px;text-transform:uppercase;font-weight:600}
+.settingsGrid input[readonly]{color:var(--gold);background:#090909}
+.settingsButtons{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:10px;margin-top:18px}.settingsButtons button{height:58px;font-size:25px;border-radius:8px;font-weight:700}
+.teePanel{width:980px}
+.teePreview{width:560px;height:360px;margin:14px auto 20px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:radial-gradient(circle at center,rgba(255,0,0,.17),transparent 48%),linear-gradient(135deg,#210506,#080202 70%);display:grid;place-items:center;box-shadow:0 0 36px rgba(255,0,0,.2) inset}
+.teeText{font-family:"Arial Narrow","Bahnschrift Condensed","Roboto Condensed",Arial,sans-serif;font-weight:300;text-align:left;color:#ff3030;font-size:54px;line-height:.92;letter-spacing:1px;text-shadow:0 0 4px #ff3030,0 0 12px #ff0000,0 0 22px rgba(255,0,0,.9),0 0 34px rgba(255,0,0,.65);position:relative}
+.teeText:before,.teeText:after{content:"";display:block;width:95px;height:4px;background:#ff3030;box-shadow:0 0 8px #ff0000,0 0 18px rgba(255,0,0,.8);margin:0 0 16px 0}
+.teeText:after{margin:16px 0 0 0}
+.teeLabel{display:block;text-align:left;width:560px;margin:0 auto;color:var(--gold);font-size:22px;font-weight:600}
+.teeLabel textarea{width:100%;margin-top:8px;background:#050608;color:#ff3030;border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:12px 14px;font-family:"Arial Narrow","Bahnschrift Condensed",Arial,sans-serif;font-size:28px;line-height:1;text-transform:uppercase;resize:none;font-weight:300}
+.teeButtons{width:560px;margin:18px auto 0;grid-template-columns:1fr 1fr 1fr!important}
+
+
+/* v7.4 requested fixes:
+   1) Anton for countdown number
+   2) Home click routing repaired by clean JS
+   3) Bottom status window reduced to Date / Time / Body Weight only
+*/
+
+/* Optional online font load. If offline, install Anton on the PC or use fallback. */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+/* Today's Workout title uses the identified Bebas-style stack, upright and condensed */
+.workoutTitleField{
+  font-family:"Bebas Neue","Bebas Neue Pro","Anton","League Gothic","Teko","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:700!important;
+  font-size:61px!important;
+  line-height:.92!important;
+  letter-spacing:1px!important;
+  color:#ffd22e!important;
+  transform:none!important;
+  text-shadow:
+    3px 3px 0 #000,
+    0 0 10px rgba(255,210,46,.65),
+    0 0 18px rgba(255,210,46,.35)!important;
+}
+
+/* Countdown number uses Anton first */
+.countdownField{
+  font-family:"Anton","Bebas Neue","Impact","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  font-size:92px!important;
+  line-height:.92!important;
+  letter-spacing:0!important;
+  color:#eeeeee!important;
+  -webkit-text-fill-color:#eeeeee!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+  text-shadow:
+    0 0 14px rgba(160,95,255,.95),
+    0 4px 0 #111,
+    2px 2px 0 #333!important;
+}
+
+/* Bottom window: cover the old 7-item status bar and rebuild only 3 evenly-spaced data fields */
+.statusThreeBackdrop{
+  position:absolute!important;
+  z-index:42!important;
+  left:12px!important;
+  top:922px!important;
+  width:1512px!important;
+  height:84px!important;
+  border:2px solid rgba(255,255,255,.22)!important;
+  border-radius:12px!important;
+  background:linear-gradient(145deg,rgba(15,17,20,.98),rgba(2,3,5,.98))!important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04),
+    0 0 26px rgba(0,0,0,.8)!important;
+  pointer-events:none!important;
+}
+
+/* Hide removed bottom fields */
+.recoveryField,
+.sleepField,
+.hrvField,
+.hydrationField{
+  display:none!important;
+}
+
+/* Three evenly spaced columns */
+.dateField,
+.timeField,
+.weightField{
+  z-index:50!important;
+  top:956px!important;
+  height:32px!important;
+  width:430px!important;
+  text-align:center!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:26px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:.2px!important;
+  text-shadow:1px 1px 0 #000!important;
+  background:transparent!important;
+  overflow:visible!important;
+}
+
+.dateField{left:50px!important;color:#ffd22e!important;}
+.timeField{left:553px!important;color:#ffd22e!important;}
+.weightField{left:1056px!important;color:#ffd22e!important;}
+
+/* Add labels above the three values */
+.dateField::before,
+.timeField::before,
+.weightField::before{
+  position:absolute!important;
+  left:0!important;
+  top:-23px!important;
+  width:430px!important;
+  text-align:center!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:19px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  color:#c9c9c9!important;
+  text-shadow:1px 1px 0 #000!important;
+}
+
+.dateField::before{content:"DATE";}
+.timeField::before{content:"TIME";}
+.weightField::before{content:"BODY WEIGHT";}
+
+/* Separators between the 3 columns */
+.timeField::after,
+.weightField::after{
+  content:"";
+  position:absolute!important;
+  left:-36px!important;
+  top:-28px!important;
+  width:1px!important;
+  height:58px!important;
+  background:rgba(255,255,255,.22)!important;
+}
+
+/* Make clickable zones impossible to bury under fields/backdrops */
+.hit{
+  z-index:10000!important;
+  pointer-events:auto!important;
+}
+
+
+/* v7.5 Anton Streak + Live Shirt Text */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.countdownField,
+.streakField{
+  font-family:"Anton","Bebas Neue","Bebas Neue Pro","Impact","Arial Black","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:0!important;
+}
+
+.countdownField{
+  font-size:92px!important;
+  line-height:.92!important;
+  color:#eeeeee!important;
+  -webkit-text-fill-color:#eeeeee!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+  text-shadow:
+    0 0 14px rgba(160,95,255,.95),
+    0 4px 0 #111,
+    2px 2px 0 #333!important;
+}
+
+.streakField{
+  font-size:92px!important;
+  line-height:.9!important;
+  color:#ff3131!important;
+  text-shadow:
+    0 0 16px #ff0000,
+    0 3px 0 #111!important;
+}
+
+.homeShirtPatch{
+  position:absolute!important;
+  z-index:44!important;
+  pointer-events:none!important;
+  left:790px!important;
+  top:382px!important;
+  width:150px!important;
+  height:116px!important;
+  border-radius:46% 44% 38% 38%!important;
+  background:radial-gradient(ellipse at center, rgba(4,5,6,.94) 0%, rgba(4,5,6,.82) 58%, rgba(4,5,6,0) 76%)!important;
+  filter:blur(.2px)!important;
+}
+
+.homeShirtText{
+  z-index:55!important;
+  pointer-events:none!important;
+  left:798px!important;
+  top:393px!important;
+  width:136px!important;
+  height:92px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  white-space:pre-line!important;
+  overflow:hidden!important;
+  font-family:"Arial Narrow","Bahnschrift Condensed","Roboto Condensed",Arial,sans-serif!important;
+  font-size:22px!important;
+  line-height:.92!important;
+  font-weight:400!important;
+  letter-spacing:.4px!important;
+  color:#ff3333!important;
+  text-shadow:
+    0 0 3px #ff3333,
+    0 0 8px #ff0000,
+    0 0 14px rgba(255,0,0,.9),
+    0 0 22px rgba(255,0,0,.65)!important;
+}
+
+.teeLabel{width:680px!important;}
+.teeLabel textarea{
+  width:100%!important;
+  min-height:150px!important;
+  font-size:30px!important;
+  line-height:1.08!important;
+  white-space:pre-wrap!important;
+}
+.teePreview{width:680px!important;}
+.teeButtons{width:680px!important;}
+.teeText{white-space:pre-line!important;}
+
+
+/* v7.6: stronger masking + true block number look */
+
+/* Solid cover over the baked-in countdown number so there is no double-image. */
+.countdownNumberMask{
+  position:absolute!important;
+  z-index:44!important;
+  pointer-events:none!important;
+  left:1314px!important;
+  top:97px!important;
+  width:182px!important;
+  height:136px!important;
+  border-radius:8px!important;
+  background:
+    radial-gradient(circle at center, rgba(121,73,198,.18) 0%, rgba(12,7,28,.98) 54%, rgba(8,5,18,.98) 100%)!important;
+  box-shadow:
+    inset 0 0 24px rgba(0,0,0,.85),
+    0 0 18px rgba(130,72,255,.28)!important;
+}
+
+/* Countdown number: blocky Anton stack, no ghosting/outline overlap. */
+.countdownField{
+  z-index:60!important;
+  left:1326px!important;
+  top:111px!important;
+  width:158px!important;
+  height:106px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-family:"Anton","Arial Black","Impact","Bebas Neue","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  font-size:84px!important;
+  line-height:.9!important;
+  letter-spacing:-2px!important;
+  color:#f1f1f1!important;
+  -webkit-text-fill-color:#f1f1f1!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+  text-shadow:
+    0 0 12px rgba(170,105,255,.9),
+    0 0 22px rgba(112,65,220,.65),
+    0 4px 0 #111,
+    2px 2px 0 #2b2b2b!important;
+}
+
+/* Workout streak number uses the same block font stack. */
+.streakField{
+  font-family:"Anton","Arial Black","Impact","Bebas Neue","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-2px!important;
+  font-size:88px!important;
+  text-shadow:
+    0 0 16px #ff0000,
+    0 3px 0 #111!important;
+}
+
+/* Stronger cover over the original wording on the guy's shirt.
+   This is intentionally larger/taller to remove the old PURPOSE text. */
+.homeShirtPatch{
+  z-index:54!important;
+  left:785px!important;
+  top:365px!important;
+  width:166px!important;
+  height:146px!important;
+  border-radius:48% 46% 42% 42%!important;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(2,3,4,.98) 0%,
+      rgba(2,3,4,.96) 46%,
+      rgba(2,3,4,.82) 65%,
+      rgba(2,3,4,0) 84%)!important;
+  filter:blur(.35px)!important;
+}
+
+/* Live shirt text now sits above the stronger patch and replaces the original wording. */
+.homeShirtText{
+  z-index:65!important;
+  left:794px!important;
+  top:384px!important;
+  width:148px!important;
+  height:112px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  white-space:pre-line!important;
+  overflow:hidden!important;
+  font-family:"Arial Narrow","Bahnschrift Condensed","Roboto Condensed",Arial,sans-serif!important;
+  font-size:21px!important;
+  line-height:.9!important;
+  font-weight:400!important;
+  letter-spacing:.25px!important;
+  color:#ff3333!important;
+  text-shadow:
+    0 0 3px #ff3333,
+    0 0 8px #ff0000,
+    0 0 14px rgba(255,0,0,.9),
+    0 0 22px rgba(255,0,0,.65)!important;
+}
+
+
+/* v7.7 final fixes from screenshot:
+   - Move countdown number block down so it no longer covers COUNTDOWN.
+   - Cover the original baked-in shirt text completely before drawing live tee text. */
+
+/* Countdown mask now starts below the COUNTDOWN label */
+.countdownNumberMask{
+  left:1322px!important;
+  top:118px!important;
+  width:168px!important;
+  height:104px!important;
+  border-radius:8px!important;
+  background:
+    radial-gradient(circle at center,
+      rgba(122,76,205,.16) 0%,
+      rgba(11,6,25,.99) 54%,
+      rgba(7,4,17,.99) 100%)!important;
+  box-shadow:
+    inset 0 0 22px rgba(0,0,0,.9),
+    0 0 16px rgba(130,72,255,.25)!important;
+}
+
+/* Countdown number stays inside the lower mask */
+.countdownField{
+  left:1328px!important;
+  top:122px!important;
+  width:156px!important;
+  height:96px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-family:"Anton","Arial Black","Impact","Bebas Neue","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-size:82px!important;
+  line-height:.9!important;
+  letter-spacing:-2px!important;
+  color:#f1f1f1!important;
+  -webkit-text-fill-color:#f1f1f1!important;
+  text-shadow:
+    0 0 12px rgba(170,105,255,.9),
+    0 0 22px rgba(112,65,220,.65),
+    0 4px 0 #111,
+    2px 2px 0 #2b2b2b!important;
+}
+
+/* Larger solid shirt cover. This intentionally removes the old PURPOSE text. */
+.homeShirtPatch{
+  z-index:58!important;
+  left:770px!important;
+  top:345px!important;
+  width:205px!important;
+  height:190px!important;
+  border-radius:52% 52% 43% 43%!important;
+  background:rgba(2,3,4,.96)!important;
+  box-shadow:
+    inset 0 0 34px rgba(25,25,25,.65),
+    0 0 18px rgba(0,0,0,.45)!important;
+  filter:blur(.45px)!important;
+}
+
+/* Re-center live tee text over the larger cover */
+.homeShirtText{
+  z-index:70!important;
+  left:790px!important;
+  top:372px!important;
+  width:165px!important;
+  height:130px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  white-space:pre-line!important;
+  overflow:hidden!important;
+  font-family:"Arial Narrow","Bahnschrift Condensed","Roboto Condensed",Arial,sans-serif!important;
+  font-size:20px!important;
+  line-height:.9!important;
+  font-weight:400!important;
+  letter-spacing:.25px!important;
+  color:#ff3333!important;
+  text-shadow:
+    0 0 3px #ff3333,
+    0 0 8px #ff0000,
+    0 0 14px rgba(255,0,0,.9),
+    0 0 22px rgba(255,0,0,.65)!important;
+}
+
+
+/* v7.8 Last Weight Tracking */
+.exerciseMetrics{
+  grid-template-columns:1fr 1fr 1fr!important;
+}
+
+.weightInput{
+  width:100%!important;
+  height:36px!important;
+  margin-top:4px!important;
+  border:1px solid rgba(255,210,46,.48)!important;
+  border-radius:6px!important;
+  background:#050608!important;
+  color:#ffd22e!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:26px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+  text-align:left!important;
+  padding:4px 8px!important;
+  outline:none!important;
+}
+
+.weightInput:focus{
+  border-color:#ffd22e!important;
+  box-shadow:0 0 12px rgba(255,210,46,.45)!important;
+}
+
+#lastUsedWeight{
+  color:#4cdf3d!important;
+  text-shadow:0 0 8px rgba(76,223,61,.45),1px 1px 0 #000!important;
+}
+
+@media (max-width:900px){
+  .exerciseMetrics{
+    grid-template-columns:1fr!important;
+  }
+}
+
+
+/* v7.9: Static tee sign + smaller countdown number box */
+
+/* Smaller mask/box for countdown number. Keeps number size large but covers less background. */
+.countdownNumberMask{
+  left:1342px!important;
+  top:116px!important;
+  width:128px!important;
+  height:102px!important;
+  border-radius:7px!important;
+  background:
+    radial-gradient(circle at center,
+      rgba(122,76,205,.12) 0%,
+      rgba(11,6,25,.98) 52%,
+      rgba(7,4,17,.98) 100%)!important;
+  box-shadow:
+    inset 0 0 18px rgba(0,0,0,.88),
+    0 0 12px rgba(130,72,255,.20)!important;
+}
+
+/* Keep text large, but centered in the smaller number area. */
+.countdownField{
+  left:1328px!important;
+  top:122px!important;
+  width:156px!important;
+  height:96px!important;
+  font-family:"Anton","Arial Black","Impact","Bebas Neue","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-size:82px!important;
+  line-height:.9!important;
+  letter-spacing:-2px!important;
+  color:#f1f1f1!important;
+  -webkit-text-fill-color:#f1f1f1!important;
+  background:none!important;
+  text-shadow:
+    0 0 12px rgba(170,105,255,.9),
+    0 0 22px rgba(112,65,220,.65),
+    0 4px 0 #111,
+    2px 2px 0 #2b2b2b!important;
+}
+
+/* No editable shirt text anymore. Strong cover for original text on the guy. */
+.homeShirtPatch{
+  z-index:58!important;
+  left:770px!important;
+  top:345px!important;
+  width:205px!important;
+  height:190px!important;
+  border-radius:52% 52% 43% 43%!important;
+  background:rgba(2,3,4,.96)!important;
+  box-shadow:
+    inset 0 0 34px rgba(25,25,25,.65),
+    0 0 18px rgba(0,0,0,.45)!important;
+  filter:blur(.45px)!important;
+}
+
+/* Static uploaded sign on the guy's shirt */
+.homeShirtSign{
+  position:absolute!important;
+  z-index:70!important;
+  pointer-events:none!important;
+  left:792px!important;
+  top:374px!important;
+  width:160px!important;
+  height:118px!important;
+  object-fit:contain!important;
+  opacity:.96!important;
+  mix-blend-mode:screen!important;
+  filter:
+    drop-shadow(0 0 5px rgba(255,0,0,.8))
+    drop-shadow(0 0 12px rgba(255,0,0,.55))!important;
+}
+
+/* Retire editable text visually if any legacy div remains */
+.homeShirtText{
+  display:none!important;
+}
+
+/* Static tee shirt screen */
+.teeStaticPreview{
+  width:680px!important;
+  height:420px!important;
+  margin:18px auto 20px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:radial-gradient(circle at center,rgba(255,0,0,.14),transparent 48%),linear-gradient(135deg,#120303,#050101 72%)!important;
+  display:grid!important;
+  place-items:center!important;
+  box-shadow:0 0 36px rgba(255,0,0,.18) inset!important;
+}
+
+.teeStaticPreview img{
+  max-width:92%!important;
+  max-height:90%!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 0 16px rgba(255,0,0,.55))!important;
+}
+
+.teeStaticNote{
+  position:relative!important;
+  color:#d9d9d9!important;
+  font-size:24px!important;
+  margin:0 auto 12px!important;
+  text-transform:uppercase!important;
+}
+
+.teeButtons{
+  width:680px!important;
+  grid-template-columns:1fr!important;
+}
+
+
+/* v8.0: shirt blend + transparent-looking Lake Placid countdown */
+
+/* Remove old black countdown box; use a feathered background patch instead. */
+.countdownNumberMask{
+  display:none!important;
+}
+
+.countdownBlendPatch{
+  position:absolute!important;
+  z-index:44!important;
+  pointer-events:none!important;
+  left:1315px!important;
+  top:108px!important;
+  width:177px!important;
+  height:111px!important;
+  object-fit:fill!important;
+  opacity:.92!important;
+}
+
+/* Number sits over the blended patch, no black box. Use original-looking block font. */
+.countdownField{
+  z-index:60!important;
+  left:1324px!important;
+  top:117px!important;
+  width:158px!important;
+  height:90px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-family:"Anton","Arial Black","Impact","Bebas Neue","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  font-size:84px!important;
+  line-height:.9!important;
+  letter-spacing:-2px!important;
+  color:#e9e9e9!important;
+  -webkit-text-fill-color:#e9e9e9!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+  text-shadow:
+    0 2px 0 #181818,
+    0 0 9px rgba(180,130,255,.85),
+    0 0 18px rgba(135,82,255,.58)!important;
+}
+
+/* Make the BE STRONGER sign look printed/glowing on the shirt, not a picture box. */
+.homeShirtPatch{
+  z-index:58!important;
+  left:790px!important;
+  top:360px!important;
+  width:172px!important;
+  height:158px!important;
+  border-radius:50% 50% 42% 42%!important;
+  background:radial-gradient(ellipse at center,
+    rgba(2,3,4,.70) 0%,
+    rgba(2,3,4,.58) 46%,
+    rgba(2,3,4,.26) 65%,
+    rgba(2,3,4,0) 84%)!important;
+  box-shadow:none!important;
+  filter:blur(.55px)!important;
+}
+
+.homeShirtSign{
+  position:absolute!important;
+  z-index:70!important;
+  pointer-events:none!important;
+  left:802px!important;
+  top:381px!important;
+  width:142px!important;
+  height:105px!important;
+  object-fit:contain!important;
+  opacity:.88!important;
+  mix-blend-mode:screen!important;
+  filter:
+    drop-shadow(0 0 3px rgba(255,0,0,.78))
+    drop-shadow(0 0 8px rgba(255,0,0,.52))!important;
+}
+
+/* Static tee preview should show the graphic cleanly without needing text input. */
+.teeStaticPreview img{
+  max-width:92%!important;
+  max-height:90%!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 0 16px rgba(255,0,0,.55))!important;
+}
+
+
+/* v8.1: shirt text like tee.png reference + Bank Gothic countdown */
+
+/* Countdown: Bank Gothic-style stack. No black box. */
+.countdownField{
+  font-family:"Bank Gothic","BankGothic Md BT","Bank Gothic Medium","Agency FB","Eurostile","Bahnschrift SemiCondensed","Arial Narrow",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  font-size:86px!important;
+  letter-spacing:-3px!important;
+  color:#ededed!important;
+  -webkit-text-fill-color:#ededed!important;
+  text-shadow:
+    0 2px 0 #161616,
+    0 0 10px rgba(176,130,255,.88),
+    0 0 18px rgba(120,75,230,.55)!important;
+}
+
+/* Keep countdown cover subtle/transparent-looking, not a black box */
+.countdownBlendPatch{
+  left:1320px!important;
+  top:112px!important;
+  width:166px!important;
+  height:102px!important;
+  opacity:.72!important;
+  filter:blur(.15px)!important;
+}
+
+/* Remove old image-on-shirt approach */
+.homeShirtSign{
+  display:none!important;
+}
+
+/* Cover baked-in original shirt wording without creating a visible rectangle */
+.homeShirtPatch{
+  z-index:58!important;
+  left:805px!important;
+  top:366px!important;
+  width:146px!important;
+  height:140px!important;
+  border-radius:50% 50% 42% 42%!important;
+  background:radial-gradient(ellipse at center,
+    rgba(1,2,3,.88) 0%,
+    rgba(1,2,3,.70) 42%,
+    rgba(1,2,3,.36) 62%,
+    rgba(1,2,3,0) 82%)!important;
+  box-shadow:none!important;
+  filter:blur(.65px)!important;
+}
+
+/* CSS neon shirt text directly on the guy, matched to tee.png reference */
+.homeShirtNeon{
+  position:absolute!important;
+  z-index:72!important;
+  pointer-events:none!important;
+  left:824px!important;
+  top:384px!important;
+  width:108px!important;
+  height:102px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  text-align:left!important;
+  font-family:"Arial Narrow","Helvetica Neue Condensed","Bahnschrift Light Condensed","Roboto Condensed",Arial,sans-serif!important;
+  font-size:22px!important;
+  line-height:.89!important;
+  font-weight:300!important;
+  letter-spacing:.2px!important;
+  color:#ff3a3a!important;
+  opacity:.96!important;
+  mix-blend-mode:screen!important;
+  text-shadow:
+    0 0 2px #ff5757,
+    0 0 6px #ff2020,
+    0 0 12px rgba(255,0,0,.86),
+    0 0 20px rgba(255,0,0,.55)!important;
+  filter:drop-shadow(0 0 4px rgba(255,0,0,.55))!important;
+}
+
+.homeShirtNeon .neonLine{
+  width:47px!important;
+  height:3px!important;
+  background:#ff3a3a!important;
+  border-radius:3px!important;
+  margin:0 0 6px 0!important;
+  box-shadow:
+    0 0 4px #ff3333,
+    0 0 10px rgba(255,0,0,.75)!important;
+}
+
+.homeShirtNeon .neonLine.bottom{
+  margin:6px 0 0 0!important;
+}
+
+/* Static tee screen preview uses same type treatment */
+.teeStaticPreview{
+  width:680px!important;
+  height:420px!important;
+}
+
+.teeNeonLarge{
+  font-family:"Arial Narrow","Helvetica Neue Condensed","Bahnschrift Light Condensed","Roboto Condensed",Arial,sans-serif!important;
+  font-weight:300!important;
+  font-size:64px!important;
+  line-height:.92!important;
+  letter-spacing:.5px!important;
+  color:#ff3a3a!important;
+  text-align:left!important;
+  text-shadow:
+    0 0 3px #ff5757,
+    0 0 9px #ff2020,
+    0 0 18px rgba(255,0,0,.86),
+    0 0 32px rgba(255,0,0,.58)!important;
+}
+
+.teeNeonLarge .neonLine{
+  width:105px!important;
+  height:4px!important;
+  background:#ff3a3a!important;
+  border-radius:4px!important;
+  margin:0 0 16px 0!important;
+  box-shadow:
+    0 0 5px #ff3333,
+    0 0 14px rgba(255,0,0,.8)!important;
+}
+
+.teeNeonLarge .neonLine.bottom{
+  margin:16px 0 0 0!important;
+}
+
+
+/* v8.2 requested cleanup:
+   - No Tee Shirt buttons in Settings/Progress.
+   - Shirt is now a feathered crop from the user's reference image so no old shirt text remains.
+   - Countdown is larger Bank Gothic-style and transparent/blended. */
+
+/* Three buttons now align cleanly after removing Tee Shirt button */
+.settingsButtons{
+  grid-template-columns:repeat(3,1fr)!important;
+}
+
+/* Hide old generated shirt approaches */
+.homeShirtNeon,
+.homeShirtSign,
+.homeShirtText{
+  display:none!important;
+}
+
+/* No obvious dark rectangle on shirt; overlay itself carries the reference shirt. */
+.homeShirtPatch{
+  display:none!important;
+}
+
+/* Reference shirt overlay from the exact tee-shirt photo. 
+   Feathered edges prevent a pasted-box look while center fully covers old lettering. */
+.homeShirtReferenceOverlay{
+  position:absolute!important;
+  z-index:75!important;
+  pointer-events:none!important;
+  left:704px!important;
+  top:340px!important;
+  width:300px!important;
+  height:296px!important;
+  object-fit:fill!important;
+  opacity:1!important;
+  filter:
+    drop-shadow(0 0 5px rgba(0,0,0,.35))
+    drop-shadow(0 0 6px rgba(255,0,0,.22))!important;
+}
+
+/* Countdown: remove black-box look */
+.countdownNumberMask{
+  display:none!important;
+}
+
+.countdownBlendPatch{
+  left:1320px!important;
+  top:112px!important;
+  width:166px!important;
+  height:102px!important;
+  opacity:.38!important;
+  filter:blur(.25px)!important;
+  mix-blend-mode:normal!important;
+}
+
+/* Bigger Bank Gothic-style countdown number to cover the baked-in original. */
+.countdownField{
+  z-index:65!important;
+  left:1308px!important;
+  top:108px!important;
+  width:194px!important;
+  height:110px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-family:"Bank Gothic","BankGothic Md BT","Bank Gothic Medium","Agency FB","Eurostile","Bahnschrift SemiCondensed","Arial Black","Arial Narrow",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  font-size:106px!important;
+  line-height:.88!important;
+  letter-spacing:-7px!important;
+  color:#f0f0f0!important;
+  -webkit-text-fill-color:#f0f0f0!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+  text-shadow:
+    0 2px 0 #111,
+    0 0 10px rgba(180,130,255,.95),
+    0 0 20px rgba(120,75,230,.72),
+    2px 2px 0 rgba(35,35,35,.7)!important;
+}
+
+
+/* v8.3: reference-matched Tournament Mode + Workout Streak windows, and shirt-head fix */
+
+/* Use cleaned home background where only old shirt wording is removed. */
+.homeOS{
+  background:url('assets/home_os_clean_v83.png') center center/100% 100% no-repeat!important;
+}
+
+/* Full reference windows from user's screenshots */
+.tournamentRefWindow{
+  position:absolute!important;
+  z-index:48!important;
+  pointer-events:none!important;
+  left:964px!important;
+  top:16px!important;
+  width:560px!important;
+  height:290px!important;
+  object-fit:fill!important;
+}
+
+.streakRefWindow{
+  position:absolute!important;
+  z-index:48!important;
+  pointer-events:none!important;
+  left:1093px!important;
+  top:322px!important;
+  width:430px!important;
+  height:218px!important;
+  object-fit:fill!important;
+}
+
+/* Hide old masks/patches for countdown; reference window supplies the panel. */
+.countdownNumberMask,
+.countdownBlendPatch{
+  display:none!important;
+}
+
+/* Same blocky font family and tuned size on both number fields */
+.countdownField,
+.streakField{
+  font-family:"Anton","Arial Black","Impact","Bebas Neue","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-1px!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+}
+
+/* Tournament mode number: placed inside the uploaded reference window number area */
+.countdownField{
+  z-index:62!important;
+  left:1327px!important;
+  top:116px!important;
+  width:154px!important;
+  height:102px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:98px!important;
+  line-height:.9!important;
+  color:#eeeeee!important;
+  -webkit-text-fill-color:#eeeeee!important;
+  text-shadow:
+    0 0 12px rgba(180,130,255,.95),
+    0 0 22px rgba(120,75,230,.65),
+    0 4px 0 #111,
+    2px 2px 0 #333!important;
+}
+
+/* Workout streak number: same font stack/size feel */
+.streakField{
+  z-index:62!important;
+  left:1237px!important;
+  top:386px!important;
+  width:145px!important;
+  height:102px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:98px!important;
+  line-height:.9!important;
+  color:#ff3131!important;
+  -webkit-text-fill-color:#ff3131!important;
+  text-shadow:
+    0 0 16px #ff0000,
+    0 3px 0 #111!important;
+}
+
+.streakDaysField{
+  z-index:62!important;
+}
+
+/* Remove clipped torso/head overlay approach */
+.homeShirtReferenceOverlay,
+.homeShirtSign,
+.homeShirtText{
+  display:none!important;
+}
+
+/* Soft local patch only over old shirt lettering, not the head */
+.homeShirtPatch{
+  display:block!important;
+  z-index:54!important;
+  left:800px!important;
+  top:365px!important;
+  width:160px!important;
+  height:145px!important;
+  border-radius:52% 52% 44% 44%!important;
+  background:radial-gradient(ellipse at center,
+    rgba(2,3,4,.76) 0%,
+    rgba(2,3,4,.58) 44%,
+    rgba(2,3,4,.28) 64%,
+    rgba(2,3,4,0) 84%)!important;
+  box-shadow:none!important;
+  filter:blur(.55px)!important;
+}
+
+/* Tee shirt like the user's reference: no head crop, neon printed on the original guy */
+.homeShirtNeon{
+  position:absolute!important;
+  z-index:72!important;
+  pointer-events:none!important;
+  left:817px!important;
+  top:380px!important;
+  width:122px!important;
+  height:118px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  text-align:left!important;
+  font-family:"Arial Narrow","Helvetica Neue Condensed","Bahnschrift Light Condensed","Roboto Condensed",Arial,sans-serif!important;
+  font-size:25px!important;
+  line-height:.90!important;
+  font-weight:300!important;
+  letter-spacing:.15px!important;
+  color:#ff3a3a!important;
+  opacity:.97!important;
+  mix-blend-mode:screen!important;
+  text-shadow:
+    0 0 2px #ff5757,
+    0 0 6px #ff2020,
+    0 0 12px rgba(255,0,0,.86),
+    0 0 20px rgba(255,0,0,.55)!important;
+  filter:drop-shadow(0 0 4px rgba(255,0,0,.55))!important;
+}
+
+.homeShirtNeon .neonLine{
+  width:51px!important;
+  height:3px!important;
+  background:#ff3a3a!important;
+  border-radius:3px!important;
+  margin:0 0 7px 0!important;
+  box-shadow:
+    0 0 4px #ff3333,
+    0 0 10px rgba(255,0,0,.75)!important;
+}
+
+.homeShirtNeon .neonLine.bottom{
+  margin:7px 0 0 0!important;
+}
+
+/* Three buttons stay clean after removing Tee Shirt button */
+.settingsButtons{
+  grid-template-columns:repeat(3,1fr)!important;
+}
+
+
+/* v8.4 fixes:
+   - Streak window uses reference background with DAYS already present.
+   - Live DAYS is hidden.
+   - Last Workout window uses reference background so checkmark is complete.
+   - Shirt text moved lower and old shirt text covered without clipping head.
+*/
+
+/* Updated reference streak overlay */
+.streakRefWindow{
+  content:url('assets/ref_streak_window_blank_v84.png')!important;
+  position:absolute!important;
+  z-index:48!important;
+  pointer-events:none!important;
+  left:1093px!important;
+  top:322px!important;
+  width:430px!important;
+  height:218px!important;
+  object-fit:fill!important;
+}
+
+/* Last Workout reference overlay, includes full checkmark */
+.lastRefWindow{
+  position:absolute!important;
+  z-index:48!important;
+  pointer-events:none!important;
+  left:1093px!important;
+  top:558px!important;
+  width:430px!important;
+  height:218px!important;
+  object-fit:fill!important;
+}
+
+/* Do not add DAYS again; it is already in the streak background. */
+.streakDaysField{
+  display:none!important;
+}
+
+/* Match countdown/streak number font and sizing */
+.countdownField,
+.streakField{
+  font-family:"Anton","Arial Black","Impact","Bebas Neue","Arial Narrow","Bahnschrift Condensed",sans-serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  letter-spacing:-1px!important;
+}
+
+.countdownField{
+  font-size:98px!important;
+}
+
+.streakField{
+  z-index:62!important;
+  left:1237px!important;
+  top:384px!important;
+  width:145px!important;
+  height:96px!important;
+  font-size:98px!important;
+  line-height:.9!important;
+  color:#ff3131!important;
+  -webkit-text-fill-color:#ff3131!important;
+  text-shadow:
+    0 0 16px #ff0000,
+    0 3px 0 #111!important;
+}
+
+/* Last workout live text over the new reference window */
+.lastWorkoutField{
+  z-index:62!important;
+  left:1122px!important;
+  top:624px!important;
+  width:290px!important;
+}
+
+.lastDetailField{
+  z-index:62!important;
+  left:1122px!important;
+  top:673px!important;
+  width:275px!important;
+}
+
+.lastDateField{
+  z-index:62!important;
+  left:1153px!important;
+  top:721px!important;
+  width:210px!important;
+}
+
+/* Shirt: cover old text lower on shirt only, leaving head/neck alone */
+.homeShirtPatch{
+  display:block!important;
+  z-index:54!important;
+  left:800px!important;
+  top:392px!important;
+  width:162px!important;
+  height:148px!important;
+  border-radius:48% 48% 42% 42%!important;
+  background:radial-gradient(ellipse at center,
+    rgba(2,3,4,.88) 0%,
+    rgba(2,3,4,.70) 44%,
+    rgba(2,3,4,.34) 66%,
+    rgba(2,3,4,0) 84%)!important;
+  box-shadow:none!important;
+  filter:blur(.55px)!important;
+}
+
+/* Move tee shirt text lower on the shirt */
+.homeShirtNeon{
+  z-index:72!important;
+  left:817px!important;
+  top:411px!important;
+  width:124px!important;
+  height:120px!important;
+  font-size:25px!important;
+  line-height:.90!important;
+}
+
+
+/* v8.5 Previous Weight + Adjustment controls */
+.exerciseMetrics{
+  grid-template-columns:1fr 1fr 1.35fr!important;
+}
+
+.weightAdjust{
+  display:grid!important;
+  grid-template-columns:48px 1fr 48px!important;
+  gap:6px!important;
+  align-items:center!important;
+  margin-top:4px!important;
+}
+
+.weightAdjust button{
+  height:36px!important;
+  border:1px solid rgba(255,210,46,.45)!important;
+  border-radius:6px!important;
+  background:#090b0d!important;
+  color:#ffd22e!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:22px!important;
+  font-weight:900!important;
+  padding:0!important;
+}
+
+.weightAdjust button:hover{
+  border-color:#ffd22e!important;
+  box-shadow:0 0 10px rgba(255,210,46,.35)!important;
+}
+
+.weightInput{
+  height:36px!important;
+  text-align:center!important;
+}
+
+.weightInput:disabled{
+  opacity:.42!important;
+  border-color:rgba(255,255,255,.2)!important;
+  color:#aaa!important;
+}
+
+/* Exercise weight manager */
+.weightsPanel{
+  width:1120px!important;
+  max-height:900px!important;
+  padding:42px!important;
+  text-align:center!important;
+}
+
+.weightsPanel h1{
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:70px!important;
+  color:#ffd22e!important;
+  margin:12px 0!important;
+  text-shadow:2px 2px 0 #000,0 0 12px rgba(255,210,46,.45)!important;
+}
+
+.weightsHelp{
+  position:relative!important;
+  font-size:20px!important;
+  color:#d9d9d9!important;
+  margin:0 auto 16px!important;
+  text-transform:none!important;
+}
+
+.weightsList{
+  position:relative!important;
+  max-height:590px!important;
+  overflow:auto!important;
+  padding-right:8px!important;
+  display:grid!important;
+  gap:8px!important;
+}
+
+.weightRow{
+  display:grid!important;
+  grid-template-columns:180px 1fr 160px!important;
+  gap:12px!important;
+  align-items:center!important;
+  background:#050608!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  border-radius:8px!important;
+  padding:10px 12px!important;
+  text-align:left!important;
+}
+
+.weightRow .workoutTag{
+  color:#ffd22e!important;
+  font-size:21px!important;
+  font-weight:800!important;
+}
+
+.weightRow .exerciseName{
+  color:#f2f2f2!important;
+  font-size:24px!important;
+  font-weight:800!important;
+}
+
+.weightRow input{
+  height:38px!important;
+  border:1px solid rgba(255,210,46,.48)!important;
+  border-radius:6px!important;
+  background:#050608!important;
+  color:#ffd22e!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:24px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+  text-align:center!important;
+  padding:4px 8px!important;
+}
+
+.weightButtons{
+  grid-template-columns:1fr 1fr 1fr!important;
+}
+
+/* Settings may now have four buttons; keep them clean. */
+.settingsPanel .settingsButtons{
+  grid-template-columns:1fr 1fr 1.25fr 1fr!important;
+}
+
+
+/* v8.7 Knee Hold Mode */
+.homeKneeHoldAlert{
+  position:absolute!important;
+  z-index:80!important;
+  left:326px!important;
+  top:626px!important;
+  width:695px!important;
+  height:42px!important;
+  display:none;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,0,0,.78)!important;
+  border:2px solid #ff3131!important;
+  color:#ffd22e!important;
+  font-family:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif!important;
+  font-size:31px!important;
+  font-weight:900!important;
+  letter-spacing:1px!important;
+  text-shadow:0 0 8px rgba(255,49,49,.75),2px 2px 0 #000!important;
+  box-shadow:0 0 16px rgba(255,49,49,.38)!important;
+}
+
+.kneeHoldActive .homeKneeHoldAlert{
+  display:flex!important;
+}
+
+.kneeHoldToggle{
+  grid-column:span 2!important;
+  border:1px solid rgba(255,49,49,.55)!important;
+  box-shadow:0 0 16px rgba(255,49,49,.16)!important;
+}
+
+.kneeHoldToggle span{
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+  color:#ffd22e!important;
+}
+
+.kneeHoldToggle input{
+  width:30px!important;
+  height:30px!important;
+  accent-color:#ff3131!important;
+}
+
+.kneeHoldToggle b{
+  font-size:22px!important;
+  color:#ff3131!important;
+  text-shadow:0 0 8px rgba(255,49,49,.6)!important;
+}
+
+.kneeHoldActive .workoutTitleField,
+.kneeHoldActive .workoutFocusField,
+.kneeHoldActive .focusLineField{
+  text-shadow:0 0 10px rgba(255,49,49,.55), 2px 2px 0 #000!important;
+}
+
+#pgKneeHold{
+  color:#ff3131!important;
+  text-shadow:0 0 10px rgba(255,49,49,.6)!important;
+}
